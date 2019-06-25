@@ -19,7 +19,7 @@
       <button class="add-to-cart" @click="addToCart()">Add to Cart</button>
     </div>
 
-    <div v-ifclass="top-row">
+    <div v-if="availableParts.heads" class="top-row">
       <!-- <div class="robot-name">
           {{selectedRobot.head.title}}
           <span v-show="selectedRobot.head.onSale" class="sale">Sale!</span>
@@ -30,7 +30,7 @@
         @partSelected="part => selectedRobot.head = part"
       />
     </div>
-    <div class="middle-row">
+    <div v-if="availableParts.heads" class="middle-row">
       <PartSelector
         :parts="availableParts.arms"
         position="left"
@@ -47,7 +47,7 @@
         @partSelected="part => selectedRobot.rightArm = part"
       />
     </div>
-    <div class="bottom-row">
+    <div v-if="availableParts.heads" class="bottom-row">
       <PartSelector
         :parts="availableParts.bases"
         position="bottom"
@@ -82,7 +82,7 @@ import axios from "axios"
 const images = require.context("../data/images", true, /\.png$/);
 
 export default {
-  name: "Robot Builder",
+  name: "robot-builder",
   components: { PartSelector, CollapsibleSection },
   data() {
     return {
