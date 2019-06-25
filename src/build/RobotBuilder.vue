@@ -79,6 +79,7 @@ import createdHookMixin from "./created-hook-mixin";
 import PartSelector from "./PartSelector.vue";
 import CollapsibleSection from "../shared/CollapsibleSection.vue";
 import axios from "axios"
+const images = require.context("../data/images", true, /\.png$/);
 
 export default {
   name: "Robot Builder",
@@ -96,12 +97,11 @@ export default {
       }
     };
   },
-  created () {
+  mounted () {
     axios
     .get('https://angry-babbage-98ec47.netlify.com/.netlify/functions/parts')
     .then(response => {
       this.availableParts = response.data;
-      console.log(this.availableParts);
     });
   },
   mixins: [createdHookMixin],
