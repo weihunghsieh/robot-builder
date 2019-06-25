@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div  class="content">
     <div class="preview">
       <CollapsibleSection>
         <div class="preview-content">
@@ -19,7 +19,7 @@
       <button class="add-to-cart" @click="addToCart()">Add to Cart</button>
     </div>
 
-    <div class="top-row">
+    <div v-ifclass="top-row">
       <!-- <div class="robot-name">
           {{selectedRobot.head.title}}
           <span v-show="selectedRobot.head.onSale" class="sale">Sale!</span>
@@ -75,17 +75,17 @@
 </template>
 
 <script>
-import availableParts from "../data/parts";
 import createdHookMixin from "./created-hook-mixin";
 import PartSelector from "./PartSelector.vue";
 import CollapsibleSection from "../shared/CollapsibleSection.vue";
+import axios from "axios"
 
 export default {
   name: "Robot Builder",
   components: { PartSelector, CollapsibleSection },
   data() {
     return {
-      availableParts,
+      availableParts: {},
       cart: [],
       selectedRobot: {
         head: {},
@@ -96,6 +96,14 @@ export default {
       }
     };
   },
+  created () {
+    axios
+    .get('https://angry-babbage-98ec47.netlify.com/.netlify/functions/parts')
+    .then(response => {
+      this.availableParts = response.data;
+      console.log(this.availableParts);
+    });
+  },
   mixins: [createdHookMixin],
   computed: {
     saleBorderClass() {
@@ -105,6 +113,7 @@ export default {
   methods: {
     addToCart() {
       const robot = this.selectedRobot;
+      
       const cost =
         robot.head.cost +
         robot.leftArm.cost +
