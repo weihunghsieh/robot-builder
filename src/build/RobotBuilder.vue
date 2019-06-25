@@ -99,9 +99,12 @@ export default {
   },
   mounted () {
     axios
-    .get('https://angry-babbage-98ec47.netlify.com/.netlify/functions/parts')
+    .get('https://angry-babbage-98ec47.netlify.com/.netlify/functions/partlist')
     .then(response => {
       this.availableParts = response.data;
+      for (var head in this.availableParts.heads) {
+        head.images
+      }
     });
   },
   mixins: [createdHookMixin],
