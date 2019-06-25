@@ -82,7 +82,7 @@ import axios from "axios"
 const images = require.context("../data/images", true, /\.png$/);
 
 export default {
-  name: "robot-builder",
+  name: "Robot Builder",
   components: { PartSelector, CollapsibleSection },
   data() {
     return {
