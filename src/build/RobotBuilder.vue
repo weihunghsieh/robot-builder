@@ -1,5 +1,5 @@
 <template>
-  <div  class="content">
+  <div class="content">
     <div class="preview">
       <CollapsibleSection>
         <div class="preview-content">
@@ -78,11 +78,10 @@
 import createdHookMixin from "./created-hook-mixin";
 import PartSelector from "./PartSelector.vue";
 import CollapsibleSection from "../shared/CollapsibleSection.vue";
-import axios from "axios"
-const images = require.context("../data/images", true, /\.png$/);
+import axios from "axios";
 
 export default {
-  name: "Robot Builder",
+  name: "robot-builder",
   components: { PartSelector, CollapsibleSection },
   data() {
     return {
@@ -97,12 +96,17 @@ export default {
       }
     };
   },
-  mounted () {
+  mounted() {
     axios
-    .get('https://angry-babbage-98ec47.netlify.com/.netlify/functions/partlist')
-    .then(response => {
-      this.availableParts = response.data;
-    });
+      .get(
+        "https://angry-babbage-98ec47.netlify.com/.netlify/functions/partlist"
+      )
+      .then(response => {
+        this.availableParts = response.data;
+        for (var head in this.availableParts.heads) {
+          head.images;
+        }
+      });
   },
   mixins: [createdHookMixin],
   computed: {
@@ -113,7 +117,7 @@ export default {
   methods: {
     addToCart() {
       const robot = this.selectedRobot;
-      
+
       const cost =
         robot.head.cost +
         robot.leftArm.cost +
